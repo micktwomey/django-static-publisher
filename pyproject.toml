@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "django-static-publisher"
+version = "0.1.0"
+description = "Publish your Django site as a static site"
+authors = ["Michael Twomey <mick@twomeylee.name>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "django_static_publisher"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.4"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.5.1"
+ruff = "^0.0.285"
+black = "^23.7.0"
+pytest = "^7.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
