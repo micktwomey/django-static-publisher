@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Iterable
 
 from django.conf import settings
 from django.test import Client
@@ -21,19 +22,33 @@ def render_to_path(destination: Path, client: Client, url: str):
         fp.write(response.content)
 
 
-def publish(destination_path: Path, patterns=PATTERNS):
+def publish(destination_path: Path, patterns=PATTERNS) -> Iterable[Path]:
     settings.ALLOWED_HOSTS = ["testserver"]
-    # TODO: allow override setting for prefix for reversed paths when writing out
-    client = Client()
+    settings.STATIC_ROOT = str(destination_path / "static")
+    # TODO: allow override setting for prefix for reversed urls in rendered templates
+    # when writing out
+    client = Client(raise_request_exception=True)
     for query, reverser in patterns:
         if query is None:
             url_path = reverser(None)
             rendered_path = url_path_to_path(destination_path, url_path)
-            print(rendered_path)
             render_to_path(rendered_path, client, url_path)
+            yield rendered_path
         else:
             for model in query().all():
                 url_path = reverser(model)
                 rendered_path = url_path_to_path(destination_path, url_path)
-                print(rendered_path)
                 render_to_path(rendered_path, client, url_path)
+                yield rendered_path
+
+    # Defer import to ensure settings from above take
+    from django.contrib.staticfiles.management.commands import collectstatic
+
+    cmd = collectstatic.Command()
+    cmd.dry_run = False
+    cmd.symlink = False
+    cmd.clear = False
+    cmd.ignore_patterns = []
+    cmd.verbosity = 2
+    cmd.post_process = True
+    cmd.collect()
