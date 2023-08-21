@@ -34,7 +34,8 @@ def reverser(
 
 
 # TODO: create a proper registry?
-PATTERNS: list[tuple[QueryCallable | None, Reverser]] = []
+Patterns = list[tuple[QueryCallable | None, Reverser]]
+PATTERNS: Patterns = []
 
 
 # TODO: is this a good name?

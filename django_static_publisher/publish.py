@@ -4,7 +4,7 @@ from typing import Iterable
 from django.conf import settings
 from django.test import Client
 
-from .patterns import PATTERNS
+from .patterns import PATTERNS, Patterns
 
 
 def url_path_to_path(prefix: Path, url_path: str) -> Path:
@@ -22,11 +22,12 @@ def render_to_path(destination: Path, client: Client, url: str):
         fp.write(response.content)
 
 
-def publish(destination_path: Path, patterns=PATTERNS) -> Iterable[Path]:
+def publish(destination_path: Path, patterns: Patterns = PATTERNS) -> Iterable[Path]:
     settings.ALLOWED_HOSTS = ["testserver"]
     settings.STATIC_ROOT = str(destination_path / "static")
     # TODO: allow override setting for prefix for reversed urls in rendered templates
     # when writing out
+    # TODO: Would it be worth spinning up a server and using HTTP requests?
     client = Client(raise_request_exception=True)
     for query, reverser in patterns:
         if query is None:
