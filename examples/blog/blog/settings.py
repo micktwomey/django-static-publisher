@@ -123,3 +123,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Extra modules to import and look for static publishing patterns
+STATIC_PUBLISHER_EXTRA_PATTERN_MODULES = [
+    "blog.static_publish",
+]

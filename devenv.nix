@@ -8,6 +8,7 @@
 
   enterShell = ''
     git --version
+    poetry install
   '';
 
   languages.python = {

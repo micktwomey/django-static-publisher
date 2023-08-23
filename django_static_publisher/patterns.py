@@ -10,7 +10,8 @@ QueryCallable = Callable[[], QuerySet]
 
 Reverser = Callable[[Any], str]
 
-
+# TODO: create a "render to markdown" reverser, specify which fields you use
+# for content.
 # TODO: using a generic class based view doesn't seem to reverse
 # TODO: is this a good name?
 def reverser(

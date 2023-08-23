@@ -6,7 +6,7 @@ from django.test import Client
 
 from .patterns import PATTERNS, Patterns
 
-
+# TODO: handle other file types like images and markdown
 def url_path_to_path(prefix: Path, url_path: str) -> Path:
     path = Path(url_path)
     if path.is_absolute():
