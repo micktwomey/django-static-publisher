@@ -9,7 +9,7 @@ packages = [{include = "django_static_publisher"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-django = "^4.2.4"
+django = "^4.2.7"
 
 
 [tool.poetry.group.dev.dependencies]
